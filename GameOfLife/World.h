@@ -7,9 +7,10 @@ class CWorld
 {
 public:
 	CWorld(size_t height, size_t width);
+	size_t CalculateNeighbors(const size_t row, size_t col) const;
 
 private:
-	size_t CalculateNeighbors(const size_t row, size_t col) const;
+	
 
 
 	// Ширина и высота (в пикселях) ячейки
