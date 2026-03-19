@@ -37,3 +37,25 @@ void CWorld::SetLife(size_t x, size_t y)
 		m_cellMap[x][y] = true;
 	}
 }
+
+void CWorld::NextGeneration()
+{
+	for (size_t row = 0; row < m_width; ++row)
+	{
+		for (size_t col = 0; col < m_height; ++col)
+		{
+			if (CalculateNeighbors(row, col) == 3)
+			{
+				m_cellMap[row][col] = true;
+			}
+			if (CalculateNeighbors(row, col) == 2 && m_cellMap[row][col])
+			{
+				m_cellMap[row][col] = true;
+			}
+			if (CalculateNeighbors(row, col) < 2 || CalculateNeighbors(row, col) > 3)
+			{
+				m_cellMap[row][col] = false;
+			}
+		}
+	}
+}

@@ -9,6 +9,7 @@ public:
 	CWorld(size_t height, size_t width);
 	size_t CalculateNeighbors(const size_t row, size_t col) const;
 
+	void NextGeneration();
 	void SetLife(size_t x, size_t y);
 
 private:
@@ -22,6 +23,5 @@ private:
 	size_t m_width;
 	
 
-	std::vector<std::vector<bool>> m_cellMap;	
-	 
+	std::vector<std::vector<bool>> m_cellMap;	 
 };
