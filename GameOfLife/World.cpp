@@ -19,7 +19,9 @@ size_t CWorld::CalculateNeighbors(const size_t row, size_t col) const
 		for (size_t j = startCol; j <= endCol; ++j)
 		{
 			if (i == row && j == col)
+			{
 				continue;
+			}
 
 			if (m_cellMap[i][j])
 			{
@@ -32,7 +34,7 @@ size_t CWorld::CalculateNeighbors(const size_t row, size_t col) const
 
 void CWorld::SetLife(size_t x, size_t y)
 {
-	if ((x >= 0) && (y >= 0) && (x <= m_width) && (y << m_height))
+	if ((x < m_width) && (y < m_height))
 	{
 		m_cellMap[x][y] = true;
 	}
@@ -40,22 +42,25 @@ void CWorld::SetLife(size_t x, size_t y)
 
 void CWorld::NextGeneration()
 {
+	std::vector<std::vector<bool>> newCellMap(m_height, std::vector<bool>(m_width, false));	
+
 	for (size_t row = 0; row < m_width; ++row)
 	{
 		for (size_t col = 0; col < m_height; ++col)
 		{
 			if (CalculateNeighbors(row, col) == 3)
 			{
-				m_cellMap[row][col] = true;
+				newCellMap[row][col] = true;
 			}
 			if (CalculateNeighbors(row, col) == 2 && m_cellMap[row][col])
 			{
-				m_cellMap[row][col] = true;
+				newCellMap[row][col] = true;
 			}
 			if (CalculateNeighbors(row, col) < 2 || CalculateNeighbors(row, col) > 3)
 			{
-				m_cellMap[row][col] = false;
+				newCellMap[row][col] = false;
 			}
 		}
 	}
+	m_cellMap = newCellMap;
 }
